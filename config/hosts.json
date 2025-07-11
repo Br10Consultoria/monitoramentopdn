@@ -1,0 +1,35 @@
+{
+  "hosts": [
+    {
+      "name": "Google DNS",
+      "ip": "8.8.8.8",
+      "description": "Servidor DNS do Google",
+      "sla_target": 99.9
+    },
+    {
+      "name": "Cloudflare DNS",
+      "ip": "1.1.1.1",
+      "description": "Servidor DNS da Cloudflare",
+      "sla_target": 99.9
+    },
+    {
+      "name": "OpenDNS",
+      "ip": "208.67.222.222",
+      "description": "Servidor DNS da OpenDNS",
+      "sla_target": 99.5
+    },
+    {
+      "name": "Servidor Local",
+      "ip": "192.168.1.1",
+      "description": "Gateway/Router local",
+      "sla_target": 99.0
+    }
+  ],
+  "test_config": {
+    "ping_count": 50,
+    "ping_interval": 0.2,
+    "timeout": 5,
+    "test_interval_minutes": 5,
+    "report_interval_hours": 1
+  }
+}

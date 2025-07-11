@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  network-monitor:
+    build: .
+    container_name: network-monitor
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/config
+      - ./data:/app/data
+      - network-monitor-data:/app/reports
+    environment:
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - TZ=America/Sao_Paulo
+    networks:
+      - monitoring
+    depends_on:
+      - portainer-agent
+
+  portainer-agent:
+    image: portainer/agent:2.27.8
+    container_name: portainer_agent
+    restart: always
+    ports:
+      - "9001:9001"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+      - /:/host
+    networks:
+      - monitoring
+
+volumes:
+  network-monitor-data:
+
+networks:
+  monitoring:
+    driver: bridge
