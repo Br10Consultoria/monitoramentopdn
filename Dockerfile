@@ -17,15 +17,19 @@ COPY requirements.txt .
 # Instalar dependências Python
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Criar usuário monitor primeiro
+RUN useradd -m -u 1000 monitor
+
 # Copiar código da aplicação
 COPY app/ ./app/
 COPY config/ ./config/
 
-# Criar diretórios necessários
-RUN mkdir -p /app/data /app/reports
+# Criar diretórios e definir permissões
+RUN mkdir -p /app/data /app/reports && \
+    chown -R monitor:monitor /app && \
+    chmod -R 755 /app
 
-# Definir usuário não-root
-RUN useradd -m -u 1000 monitor && chown -R monitor:monitor /app
+# Mudar para usuário monitor
 USER monitor
 
 # Comando padrão
